@@ -6,6 +6,7 @@
     <EditText
         android:id="@+id/fragment_add_order_edt"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="点击订单"/>
 
 </LinearLayout>

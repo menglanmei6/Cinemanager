@@ -9,14 +9,13 @@ import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.Window;
-import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
 import net.lzzy.cinemanager.R;
 import net.lzzy.cinemanager.fragments.CinemasFragment;
-import net.lzzy.cinemanager.fragments.FragmentAddCinemas;
-import net.lzzy.cinemanager.fragments.FragmentAddOrders;
+import net.lzzy.cinemanager.fragments.AddCinemaFragment;
+import net.lzzy.cinemanager.fragments.AddOrderFragment;
 import net.lzzy.cinemanager.fragments.OrdersFragment;
 
 /**
@@ -80,11 +79,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Fragment createFragment(int id) {
         switch (id) {
             case R.id.bar_title_tv_add_cinema:
-               return new FragmentAddCinemas();
+               return new AddCinemaFragment();
             case R.id.bar_title_tv_view_cinema:
                 return new CinemasFragment();
             case R.id.bar_title_tv_add_order:
-               return new FragmentAddOrders();
+               return new AddOrderFragment();
 
             case R.id.bar_title_tv_view_order:
                 return new OrdersFragment();
