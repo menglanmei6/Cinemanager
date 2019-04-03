@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center_vertical|center_horizontal"
     android:background="@color/background"
-    android:orientation="vertical"
-    android:layout_marginTop="30dp">
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
@@ -13,7 +12,7 @@
         android:gravity="center"
         android:text="新影院"
         android:layout_marginStart="10dp"
-
+        android:background="@color/color5"
         android:textColor="@android:color/black"
         android:textSize="30sp" />
     <LinearLayout
@@ -32,7 +31,7 @@
                 android:textSize="20sp"
                 android:text="选择地点"/>
 
-            <TextView android:id="@+id/dialog_add_cinema_tv_area"
+            <TextView android:id="@+id/dialog_add_tv_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="广西柳州市鱼峰区"

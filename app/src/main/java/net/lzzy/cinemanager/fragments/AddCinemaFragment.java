@@ -1,9 +1,8 @@
 package net.lzzy.cinemanager.fragments;
 
+import android.content.Context;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,19 +20,23 @@ import net.lzzy.cinemanager.models.Cinema;
  * Description:
  */
 public class AddCinemaFragment extends BaseFragment {
-    private LinearLayout layoutAddCinema;
     private String province = "广西壮族自治区";
     private String city = "柳州市";
     private String area = "鱼峰区";
     private TextView tvArea;
+    private  OnFragmentInteractionList listener;
+    private OnCinemaCreatedListener cinemaListener;
 
     @Override
     protected void populate() {
+
         // layoutAddCinema = find(R.id.dialog_add_cinema_layout_area);
-        tvArea = find(R.id.dialog_add_cinema_tv_area);
+        tvArea = find(R.id.dialog_add_tv_area);
         EditText edtName = find(R.id.dialog_add_cinema_edt_name);
+        listener.hideSearch();
         find(R.id.dialog_add_cinema_layout_area).setOnClickListener(v -> {
             JDCityPicker cityPicker = new JDCityPicker();
+            cityPicker.init(getActivity());
             cityPicker.setOnCityItemClickListener(new OnCityItemClickListener() {
                 @Override
                 public void onSelected(ProvinceBean province, CityBean city, DistrictBean district) {
@@ -64,11 +67,63 @@ public class AddCinemaFragment extends BaseFragment {
             cinema.setProvince(province);
             cinema.setLocation(tvArea.getText().toString());
             edtName.setText("");
+            cinemaListener.saveCinema(cinema);
+
         });
+        find(R.id.dialog_add_cinema_btn_cancel).setOnClickListener(v ->
+                cinemaListener.cancelAddCinema());
     }
 
     @Override
     public int getLayoutRes() {
-        return R.layout.fragment_add_cinemas;
+        return R.layout.fragment_add_cinemas; }
+
+    @Override
+    public void search(String kw) {
+
     }
+
+    @Override
+    public void hideSearch() {
+
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden){
+            listener.hideSearch();
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            listener= (OnFragmentInteractionList) context;
+            cinemaListener =(OnCinemaCreatedListener)context;
+        }catch (ClassCastException e){
+            throw new ClassCastException(context.toString()+"必须实现OnFragmentInteractionListener");
+        }
+
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener=null;
+
+    }
+    public interface OnCinemaCreatedListener {
+        /**
+         * 保存数据
+         *
+         */
+
+        void cancelAddCinema();
+
+        void saveCinema(Cinema cinema);
+    }
+
+
 }

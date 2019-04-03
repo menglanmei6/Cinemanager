@@ -4,19 +4,20 @@
     android:layout_height="match_parent">
 
     <ListView
-        android:id="@+id/activity_cinema_lv"
+        android:id="@+id/fragment_order_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <TextView
-        android:id="@+id/activity_cinemas_tv_none"
+        android:id="@+id/activity_main_tv_none"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="暂无数据，请手动添加" />
+        android:text="暂无数据，请添加数据" />
 
     <include
-        layout="@layout/fragment_add_cinemas"
+        android:id="@+id/dialog_add_order_layout"
+        layout="@layout/fragment_add_orders"
         android:visibility="gone" />
 
 </FrameLayout>

@@ -44,4 +44,7 @@ public abstract class BaseFragment extends Fragment {
     <T extends View> T find(@IdRes int id){
         return Objects.requireNonNull(getView().findViewById(id));
     }
+    public abstract void search(String kw);
+
+    public abstract void hideSearch();
 }
