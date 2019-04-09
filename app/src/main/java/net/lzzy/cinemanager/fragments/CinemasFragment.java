@@ -1,10 +1,16 @@
 package net.lzzy.cinemanager.fragments;
 
+import android.content.Context;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+
+import com.hp.hpl.sparta.xpath.ParentNodeTest;
 
 import net.lzzy.cinemanager.R;
 import net.lzzy.cinemanager.models.Cinema;
@@ -24,13 +30,28 @@ import java.util.concurrent.ArrayBlockingQueue;
 public class CinemasFragment extends BaseFragment {
 
     private List<Cinema> cinemas;
+    public static final String CINEMA="cinema";
     private CinemaFactory factory=CinemaFactory.getInstance();
     private ListView lv;
     private Cinema cinema;
     private GenericAdapter<Cinema> adapter;
-    public CinemasFragment(){}
-    public CinemasFragment(Cinema cinema) {
-        this.cinema=cinema;
+    private OnCinemaCreatedListener listener;
+
+
+    public static CinemasFragment newInstance(Cinema cinema) {
+        CinemasFragment fragment=new CinemasFragment();
+        Bundle args=new Bundle();
+        args.putParcelable(CINEMA,cinema);
+        fragment.setArguments(args);
+        return fragment;
+    }
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments()!=null){
+            Cinema cinema=getArguments().getParcelable(CINEMA);
+            this.cinema=cinema;
+        }
     }
 
     @Override
@@ -59,6 +80,8 @@ public class CinemasFragment extends BaseFragment {
             }
         };
         lv.setAdapter(adapter);
+        lv.setOnItemClickListener(((parent, view, position, id) ->
+                listener.onCinemaSelected(adapter.getItem(position).getId().toString())));
         if (cinema!=null){
             save(cinema);
         }
@@ -88,9 +111,28 @@ public class CinemasFragment extends BaseFragment {
 
     @Override
     public void hideSearch() {
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            listener= (OnCinemaCreatedListener) context;
+        }catch (ClassCastException e){
+            throw new ClassCastException(context.toString()+"必须实现OnCinemaCreatedListener");
+        }
 
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener=null;
+    }
+
+    public interface OnCinemaCreatedListener{
+        void onCinemaSelected(String cinemaId);
+    }
 
 }
 

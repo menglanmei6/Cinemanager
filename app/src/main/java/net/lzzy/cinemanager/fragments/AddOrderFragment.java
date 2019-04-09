@@ -59,7 +59,6 @@ public class AddOrderFragment extends BaseFragment {
         addListener();
         showAndOrders();
 
-
     }
 
     private void showAndOrders() {
@@ -91,7 +90,7 @@ public class AddOrderFragment extends BaseFragment {
         Cinema cinema = CinemaFactory.getInstance().getById(order.getCinemaId().toString());
         String content = "[" + order.getMovie() + "]" + order.getMovieTime() + "\n" + cinema.toString() + "票价" + order.getPrice() + "元";
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_order, null);
-        ImageView img = view.findViewById(R.id.dialog_qrcode_img);
+        ImageView img = view.findViewById(R.id.dialog_code_img);
         img.setImageBitmap(AppUtils.createQRCodeBitmap(content, 300, 300));
         new AlertDialog.Builder(getActivity()).setView(view).show();
     }
